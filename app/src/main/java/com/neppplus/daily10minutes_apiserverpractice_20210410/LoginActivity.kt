@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import com.neppplus.daily10minutes_apiserverpractice_20210410.utils.ContextUtil
 import com.neppplus.daily10minutes_apiserverpractice_20210410.utils.ServerUtil
 import kotlinx.android.synthetic.main.activity_login.*
 import org.json.JSONObject
@@ -26,6 +27,7 @@ class LoginActivity : BaseActivity() {
         autoLoginCheckBox.setOnCheckedChangeListener { buttonView, isChecked ->
 
             Log.d("자동로그인체크여부", isChecked.toString())
+
 
         }
 
