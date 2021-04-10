@@ -9,6 +9,7 @@ class ContextUtil {
         private val prefName = "Daily10MinutesPref"
 
         private val AUTO_LOGIN = "AUTO_LOGIN"
+        private val LOGIN_TOKEN = "LOGIN_TOKEN"
 
 //        자동로그인 설정여부 저장 (setter) 함수
 
@@ -31,6 +32,18 @@ class ContextUtil {
             return pref.getBoolean(AUTO_LOGIN, false)
 
         }
+
+
+        fun setLoginToken(context: Context, token: String) {
+            val pref = context.getSharedPreferences(prefName, Context.MODE_PRIVATE)
+            pref.edit().putString(LOGIN_TOKEN, token).apply()
+        }
+
+        fun getLoginToken(context: Context) : String {
+            val pref = context.getSharedPreferences(prefName, Context.MODE_PRIVATE)
+            return pref.getString(LOGIN_TOKEN, "")!!
+        }
+
 
     }
 
