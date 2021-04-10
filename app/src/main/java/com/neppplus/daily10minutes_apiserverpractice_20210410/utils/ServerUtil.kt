@@ -1,5 +1,9 @@
 package com.neppplus.daily10minutes_apiserverpractice_20210410.utils
 
+import okhttp3.FormBody
+import okhttp3.OkHttpClient
+import okhttp3.Request
+
 class ServerUtil {
 
 
@@ -16,7 +20,32 @@ class ServerUtil {
 
         fun postRequestLogin(email : String, pw : String) {
 
+//            어느 주소로 가야하나? 호스트주소/기능주소
+//            ex. 로그인 => http://15.164.153.174/user   HOST/user  => 최종 주소 완성.
 
+            val urlString = "${HOST_URL}/user"
+
+
+//            갈때 어떤 파라미터를 가져가야하나? POST Vs. GET 에 따라 다르다.
+//            POST - formData에 데이터 첨부.
+            val formData = FormBody.Builder()
+                .add("email", email)
+                .add("password", pw)
+                .build()
+
+//            모든 정보 종합 + 어떤 메쏘드?
+
+            val request = Request.Builder()
+                .url(urlString)  // 어디로 가는지?
+                .post(formData)  // POST 방식 - 필요 데이터 (formData) 들고 가도록
+                .build()
+
+//            정리된 정보를 들고 => 실제 API 요청 진행.
+
+//            클라이언트로써 동작하는 코드를 쉽게 작성하도록 도와주는 라이브러리 : OkHttp
+            val client = OkHttpClient()
+
+            client.newCall(request)
 
         }
 
