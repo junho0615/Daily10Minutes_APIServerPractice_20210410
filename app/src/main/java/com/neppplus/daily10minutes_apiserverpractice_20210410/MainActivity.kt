@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.neppplus.daily10minutes_apiserverpractice_20210410.datas.Project
 import com.neppplus.daily10minutes_apiserverpractice_20210410.utils.ServerUtil
+import org.json.JSONObject
 
 class MainActivity : BaseActivity() {
 
@@ -27,7 +28,23 @@ class MainActivity : BaseActivity() {
     }
 
     fun getProjectListFromServer() {
-        ServerUtil
+        ServerUtil.getRequestProjectList(mContext, object  : ServerUtil.JsonResponseHandler {
+            override fun onResponse(jsonObj: JSONObject) {
+
+                val dataObj = jsonObj.getJSONObject("data")
+                val projectsArr = dataObj.getJSONArray("projects")
+
+                for (i in 0 until projectsArr.length()) {
+                    val projectObj = projectsArr.getJSONObject(i)
+
+
+
+                    val project = Project.getProjectFromJson(projectObj)
+                }
+
+            }
+
+        })
     }
 
 }
