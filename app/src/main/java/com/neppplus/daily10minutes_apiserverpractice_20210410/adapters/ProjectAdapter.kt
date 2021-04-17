@@ -5,10 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.ImageView
+import android.widget.TextView
 import com.neppplus.daily10minutes_apiserverpractice_20210410.R
 import com.neppplus.daily10minutes_apiserverpractice_20210410.datas.Project
 
-class ProgectAdapter(
+class ProjectAdapter(
     val mContext : Context,
     resid : Int,
     val mList : List<Project>) : ArrayAdapter<Project>(mContext, resid, mList) {
@@ -24,6 +26,12 @@ class ProgectAdapter(
         }
         val row = tempRow!!
 
+        val data = mList[position]
+
+        val projectBackGroundImg = row.findViewById<ImageView>(R.id.projectBackGroundImg)
+        val projectTitleTxt = row.findViewById<TextView>(R.id.projectTitleTxt)
+
+        projectTitleTxt.text = data.title
         return row
     }
 }

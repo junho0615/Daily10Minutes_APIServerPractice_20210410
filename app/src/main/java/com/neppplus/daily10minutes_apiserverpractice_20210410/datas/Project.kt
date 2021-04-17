@@ -17,7 +17,7 @@ class Project(
 
             project.id = jsonObj.getInt("id")
             project.title = jsonObj.getString("title")
-            project.imageUrl = jsonObj.getString("imageUrl")
+            project.imageUrl = jsonObj.getString("img_url")
             project.description = jsonObj.getString("description")
 
             return project

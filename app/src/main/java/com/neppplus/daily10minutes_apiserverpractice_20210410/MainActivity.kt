@@ -1,14 +1,16 @@
 package com.neppplus.daily10minutes_apiserverpractice_20210410
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.neppplus.daily10minutes_apiserverpractice_20210410.adapters.ProjectAdapter
 import com.neppplus.daily10minutes_apiserverpractice_20210410.datas.Project
 import com.neppplus.daily10minutes_apiserverpractice_20210410.utils.ServerUtil
+import kotlinx.android.synthetic.main.activity_main.*
 import org.json.JSONObject
 
 class MainActivity : BaseActivity() {
 
     val mProjects = ArrayList<Project>()
+    lateinit var mProjectAdapter : ProjectAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +27,9 @@ class MainActivity : BaseActivity() {
 
         getProjectListFromServer()
 
+        mProjectAdapter = ProjectAdapter(mContext, R.layout.project_list_item, mProjects)
+        projectListView.adapter = mProjectAdapter
+
     }
 
     fun getProjectListFromServer() {
@@ -40,10 +45,13 @@ class MainActivity : BaseActivity() {
 
 
                     val project = Project.getProjectFromJson(projectObj)
+
+                    mProjects.add(project)
                 }
-
+                runOnUiThread {
+                    mProjectAdapter.notifyDataSetChanged()
+                }
             }
-
         })
     }
 
