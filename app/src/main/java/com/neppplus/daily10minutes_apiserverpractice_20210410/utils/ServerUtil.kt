@@ -282,6 +282,93 @@ class ServerUtil {
 
         }
 
+//        프로젝트 포기하기
+
+        fun deleteRequestGiveUpProject(context: Context, projectId: Int , handler: JsonResponseHandler?) {
+
+//            어디로?+어떤데이터? => URL을 만들때 한꺼번에 전부 적어야한다.
+//            주소를 적는게 복잡해짐. => 복잡한 가공을 도와주는 (OkHttp 라이브러리 제공) 클래스 활용. => URLBuilder
+
+            val urlBuilder = "${HOST_URL}/project".toHttpUrlOrNull()!!.newBuilder()
+
+//             만들어진 기초 URL에 필요한 파라미터들을 붙여주자.
+            urlBuilder.addEncodedQueryParameter("project_id", projectId.toString())
+
+//            붙일 정보가 다 붙었으면 최종 String 형태로 변환.
+            val urlString = urlBuilder.build().toString()
+
+            Log.d("가공된URL", urlString)
+
+            val request = Request.Builder()
+                .url(urlString)
+                .delete()
+                .header("X-Http-Token", ContextUtil.getLoginToken(context))
+                .build()
+
+            val client = OkHttpClient()
+
+            client.newCall(request).enqueue(object  : Callback{
+                override fun onFailure(call: Call, e: IOException) {
+
+                }
+
+                override fun onResponse(call: Call, response: Response) {
+                    val bodyString = response.body!!.string()
+                    val jsonObj = JSONObject(bodyString)
+                    Log.d("서버응답본문", jsonObj.toString())
+
+                    handler?.onResponse(jsonObj)
+                }
+
+            })
+
+        }
+
+//        특정 프로젝트 상세보기
+
+        fun getRequestProjectDetail(context: Context, projectId: Int, handler: JsonResponseHandler?) {
+
+//            어디로?+어떤데이터? => URL을 만들때 한꺼번에 전부 적어야한다.
+//            주소를 적는게 복잡해짐. => 복잡한 가공을 도와주는 (OkHttp 라이브러리 제공) 클래스 활용. => URLBuilder
+
+            val urlBuilder = "${HOST_URL}/project".toHttpUrlOrNull()!!.newBuilder()
+
+            urlBuilder.addEncodedPathSegment(projectId.toString())
+
+//             만들어진 기초 URL에 필요한 파라미터들을 붙여주자.
+//            urlBuilder.addEncodedQueryParameter("email", email)
+
+//            붙일 정보가 다 붙었으면 최종 String 형태로 변환.
+            val urlString = urlBuilder.build().toString()
+
+            Log.d("가공된URL", urlString)
+
+            val request = Request.Builder()
+                .url(urlString)
+                .get()
+                .header("X-Http-Token", ContextUtil.getLoginToken(context))
+                .build()
+
+            val client = OkHttpClient()
+
+            client.newCall(request).enqueue(object  : Callback{
+                override fun onFailure(call: Call, e: IOException) {
+
+                }
+
+                override fun onResponse(call: Call, response: Response) {
+                    val bodyString = response.body!!.string()
+                    val jsonObj = JSONObject(bodyString)
+                    Log.d("서버응답본문", jsonObj.toString())
+
+                    handler?.onResponse(jsonObj)
+                }
+
+            })
+
+        }
+
+
     }
 
 }
