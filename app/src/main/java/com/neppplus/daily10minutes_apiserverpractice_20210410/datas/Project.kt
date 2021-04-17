@@ -7,14 +7,17 @@ class Project(
     var id : Int,
     var title : String,
     var imageUrl : String,
-    var description : String) : Serializable {
+    var description : String,
+    var onGoingUserCount : Int) : Serializable {
 
 //    보조 생성자 추가. => Project() 만으로도 만들 수 있게.
-    constructor() : this(0, "", "", "")
+    constructor() : this(0, "", "", "", 0)
 
     companion object {
         fun getProjectFromJson(jsonObj : JSONObject) : Project {
             val project = Project()
+
+            project.onGoingUserCount = jsonObj.getInt("ongoing_users_count")
 
             project.id = jsonObj.getInt("id")
             project.title = jsonObj.getString("title")
