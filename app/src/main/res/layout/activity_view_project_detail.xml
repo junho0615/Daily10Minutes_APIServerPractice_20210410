@@ -50,12 +50,11 @@
     </FrameLayout>
 
     <LinearLayout
+        android:id="@+id/tagListLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:id="@+id/tagListLayout"
-        android:orientation="horizontal">
-
+        android:orientation="horizontal"
+        android:padding="10dp">
 
 
     </LinearLayout>
@@ -103,5 +102,13 @@
             android:textSize="17sp" />
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/applyBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:text="참여 신청하기" />
 
 </LinearLayout>
