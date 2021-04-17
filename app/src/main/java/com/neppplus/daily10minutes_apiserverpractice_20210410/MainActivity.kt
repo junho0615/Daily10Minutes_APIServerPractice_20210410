@@ -27,6 +27,10 @@ class MainActivity : BaseActivity() {
 
         projectListView.setOnItemClickListener { parent, view, position, id ->
             val clickedProject = mProjects[position]
+
+            val myIntent = Intent(mContext, ViewProjectDetailActivity::class.java)
+            myIntent.putExtra("projectInfo", clickedProject)
+            startActivity(myIntent)
         }
 
         logoutBtn.setOnClickListener {
