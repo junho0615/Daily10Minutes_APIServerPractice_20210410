@@ -53,6 +53,10 @@ class ProofAdapter(
             Glide.with(mContext).load(proofData.imageUrls[0]).into(proofImg)
         }
 
+//        인증글에 달린 -> 작성자 정보를 받아서 -> UI 에 반영.
+        Glide.with(mContext).load(proofData.writer.profileImgUrls[0]).into(writerProfileImg)
+        writerNicknameTxt.text = proofData.writer.nickName
+
         return row
     }
 }
