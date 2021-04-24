@@ -7,6 +7,12 @@ class Proof {
     var id = 0
     var content = "" //String이 들어올 예정
 
+//    이미지 경로 (URL) 들을 저장할 ArrayList
+    val imageUrls = ArrayList<String>()
+
+//    이 글을 누가 썼는지? 사용자 정보를 통째로 변수로.
+    lateinit var writer : User
+
     companion object {
 //        JSON 한덩어리 -> Proof로 변환 기능.
 
@@ -16,6 +22,18 @@ class Proof {
 
             proof.id = jsonObj.getInt("id")
             proof.content = jsonObj.getString("content")
+
+//            imageurls에 사진 경로들을 추가.
+            val imagesArr = jsonObj.getJSONArray("images")
+
+            for (i in 0 until imagesArr.length()) {
+//                { } -> "img_url" String 추출 -> proof의 imageUrls에 추가.
+
+                proof.imageUrls.add(imagesArr.getJSONObject(i).getString("img_url"))
+            }
+
+//            이 글의 작성자 정보도 파싱.
+            proof.writer = User.getUserFromJson(jsonObj.getJSONObject("user"))
 
             return proof
         }
